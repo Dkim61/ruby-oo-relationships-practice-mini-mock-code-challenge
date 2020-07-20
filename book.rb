@@ -13,5 +13,9 @@ class Book
         @@all
     end
 
+    def author_book
+        Author_Book.all.select {|Author_Book_Instance| Author_Book_Instance.name == self}
+    end
+
     
 

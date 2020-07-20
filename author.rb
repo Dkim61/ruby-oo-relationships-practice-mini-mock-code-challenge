@@ -11,30 +11,26 @@ class Author
         @@all
     end
 
+    def author_book
+        Author_Book.all.select {|Author_Book_Instance| Author_Book_Instance.author == self}
+    end
+
     def books
-        Book.all.select {|book| book.author == self}
+        author_book.map do |Author_Book_Instance|
+            Author_Book_Instance.book
+        end
     end
 
     def write_book(title, word_count)
         Book.new(title, self, word_count)
     end
 
-    def total_words
-        total_words = 0
-        books.map do |book|
-           total_words << book.word_count
-        end
-        total_words
-    end
-
-
     def self.most_words
-        most_words = 0
-        books.each do |book|
-            if book.word_count > most_words
-                most_words = book.word_count
+        words = 0
+        author_book.each do |Author_Book_Instance|
+            if Author_Book_Instance.word_count > words
+                words = author_book.word_count
             end
         end
-        most_words
-    end
 
+end
